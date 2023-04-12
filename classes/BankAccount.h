@@ -8,6 +8,7 @@ private:
 
 public:
   BankAccount() = default;
+  BankAccount(std::string);
   BankAccount(std::string n, float b);
   std::string get_name();
   void set_name(std::string n);

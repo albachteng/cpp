@@ -6,6 +6,8 @@ using std::cout;
 using std::endl;
 using std::string;
 
+BankAccount::BankAccount(string n) : BankAccount(n, 0) {}
+
 BankAccount::BankAccount(string n, float b) : name(n), balance(b) {
   cout << "account constructor for " << name << " balance: " << balance << endl;
 }
