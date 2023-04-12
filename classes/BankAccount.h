@@ -10,7 +10,7 @@ public:
   BankAccount() = default;
   BankAccount(std::string n, float b);
   std::string get_name();
-  // void set_name(std::string n);
+  void set_name(std::string n);
   float get_balance();
   void set_balance(float b);
 };
