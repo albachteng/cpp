@@ -12,6 +12,9 @@ int main() {
   cout << "---- claudia's acct ----" << endl;
   cout << claudia_account.get_name() << endl;
   cout << claudia_account.get_balance() << endl;
+  claudia_account.set_balance(2000.45f);
+  cout << "new balance: " << endl;
+  cout << claudia_account.get_balance() << endl;
 
   cout << "---- peter's acct ----" << endl;
   cout << peter_account.get_name() << endl;

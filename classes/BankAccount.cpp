@@ -13,3 +13,4 @@ BankAccount::BankAccount(string n, float b) : name(n), balance(b) {
 string BankAccount::get_name() { return name; }
 
 float BankAccount::get_balance() { return balance; }
+void BankAccount::set_balance(float b) { balance = b; }
