@@ -7,9 +7,9 @@ private:
   float balance{0};
 
 public:
-  BankAccount() = default;
-  BankAccount(std::string);
-  BankAccount(std::string n, float b);
+  explicit BankAccount() = default;
+  explicit BankAccount(std::string);
+  explicit BankAccount(std::string n, float b);
   std::string get_name();
   void set_name(std::string n);
   float get_balance();
