@@ -20,7 +20,8 @@ int main() {
   claudia_copy.display();
 
   // update_and_display_account_details(claudia_account);
-  cout << " --- end ---" << endl;
+  cout << " --- transaction log ---" << endl;
+  claudia_account.display_transaction_report();
 
   // peter_account.display();
 }

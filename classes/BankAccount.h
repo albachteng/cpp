@@ -1,12 +1,14 @@
 #pragma once
 #include "CreditCard.h"
 #include <string>
+#include <vector>
 
 class BankAccount {
 private:
   const std::string name{};
   float balance{0};
   CreditCard *credit_card;
+  std::vector<std::string> transaction_log;
 
 public:
   explicit BankAccount() = default;
@@ -21,4 +23,5 @@ public:
   void display();
   float get_balance();
   void set_balance(float b);
+  void display_transaction_report() const;
 };
