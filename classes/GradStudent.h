@@ -3,8 +3,12 @@
 #include <string>
 
 class GraduateStudent : public Student {
-public:
+private:
   bool scholarship;
+
+public:
   GraduateStudent() = default;
   bool has_scholarship() const;
+  void set_scholarship(bool b);
+  void display();
 };

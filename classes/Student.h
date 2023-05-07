@@ -6,11 +6,10 @@ class Student {
 private:
   std::string id;
   float tuition;
-
-public:
   std::string name;
   float gpa;
 
+public:
   Student() = default;
 
   float get_tuition();
