@@ -1,27 +1,21 @@
 #include "BankAccount.h"
+#include "GradStudent.h"
+#include <ios>
 #include <iostream>
+#include <type_traits>
 
 using std::cout;
 using std::endl;
 
-void update_and_display_account_details(BankAccount bank_account) {
-  bank_account.set_balance(4444);
-  bank_account.display();
-}
-
 int main() {
-  BankAccount claudia_account("Claudia", 1000.45f);
-  BankAccount claudia_copy{claudia_account};
+  Student student;
+  GraduateStudent grad_student;
 
-  cout << "---- claudia's acct ----" << endl;
-  claudia_account.display();
+  cout << "student: " << typeid(student).name() << endl;
+  cout << "grad student: " << typeid(grad_student).name() << endl;
 
-  cout << "--- claudia copy ---" << endl;
-  claudia_copy.display();
-
-  // update_and_display_account_details(claudia_account);
-  cout << " --- transaction log ---" << endl;
-  claudia_account.display_transaction_report();
-
-  // peter_account.display();
+  cout << "Student is a base class of GraduateStudent: " << std::boolalpha
+       << std::is_base_of<Student, GraduateStudent>() << endl;
+  cout << "Graduatestudent is a base class of Student: " << std::boolalpha
+       << std::is_base_of<GraduateStudent, Student>() << endl;
 }
