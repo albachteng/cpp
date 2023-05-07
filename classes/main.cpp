@@ -4,18 +4,25 @@
 #include <iostream>
 #include <type_traits>
 
+using std::boolalpha;
 using std::cout;
 using std::endl;
 
 int main() {
-  Student student;
-  GraduateStudent grad_student;
+  Student student = Student();
+  GraduateStudent grad_student = GraduateStudent();
 
-  cout << "student: " << typeid(student).name() << endl;
-  cout << "grad student: " << typeid(grad_student).name() << endl;
+  student.name = "Ethan";
+  student.gpa = 3.7f;
 
-  cout << "Student is a base class of GraduateStudent: " << std::boolalpha
-       << std::is_base_of<Student, GraduateStudent>() << endl;
-  cout << "Graduatestudent is a base class of Student: " << std::boolalpha
-       << std::is_base_of<GraduateStudent, Student>() << endl;
+  grad_student.name = "Vera";
+  grad_student.gpa = 2.9f;
+  grad_student.scholarship = true;
+
+  cout << "Student name: " << student.get_name()
+       << " gpa: " << student.get_gpa() << endl;
+
+  cout << "Grad name: " << grad_student.get_name()
+       << " gpa: " << grad_student.get_gpa() << " scholarship: " << boolalpha
+       << grad_student.has_scholarship() << endl;
 }
