@@ -16,6 +16,8 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <vector>
 
 // Here is a small helper for you! Have a look.
 #include "ResourcePath.hpp"
@@ -27,15 +29,40 @@ int main(int, char const **) {
 
   sf::RenderWindow window(sf::VideoMode(wWidth, wHeight), "SFML window");
 
-  int r = 0;
-  int g = 255;
-  int b = 255;
+  // int r = 0;
+  // int g = 255;
+  // int b = 255;
+  std::vector<float> shapeMoveSpeedX;
+  std::vector<float> shapeMoveSpeedY;
+  int sign = -1;
 
-  sf::CircleShape circle(50);
-  circle.setFillColor(sf::Color(r, g, b));
-  circle.setPosition(300.0f, 300.0f);
-  float circleMoveSpeedX = 0.1f;
-  float circleMoveSpeedY = 0.1f;
+  std::vector<std::shared_ptr<sf::Shape>> shapes;
+  for (float x = 0.0f; x < 10.0f; x++) {
+    for (float y = 0.0f; y < 10.0f; y++) {
+      // std::shared_ptr<sf::Shape> circle =
+      //     std::make_shared<sf::CircleShape>(50.0f);
+      // circle->setFillColor(sf::Color(y * 10, x * 10, 0));
+      // circle->setPosition(wHeight - (x * 10), wWidth - (y * 10));
+      // circle->setOrigin(50.0f, 50.0f);
+      std::shared_ptr<sf::Shape> rect =
+          std::make_shared<sf::RectangleShape>(sf::Vector2f(50.0f, 50.0f));
+      rect->setOrigin(25.0f, 25.0f);
+      rect->setFillColor(sf::Color(x * 10, y * 10, 0));
+      rect->setPosition(x * 100.0f, y * 100.0f);
+      // shapes.push_back(circle);
+      shapes.push_back(rect);
+      shapeMoveSpeedX.push_back((x + 2 * y) / 10.0f * sign);
+      shapeMoveSpeedY.push_back((2 * x - y) / 10.0f);
+      sign *= -1;
+    }
+  }
+
+  // sf::CircleShape circle(50); 
+  // circle.setFillColor(sf::Color(r, g, b));
+  // circle.setPosition(300.0f, 300.0f);
+  // float circleMoveSpeedX = 0.1f;
+  // float circleMoveSpeedY = 0.1f;
+  // circle.setOrigin(50.0f, 50.0f);
 
   // Set the Icon
   sf::Image icon;
@@ -86,28 +113,33 @@ int main(int, char const **) {
     }
 
     // bounce off walls
-    auto x = circle.getPosition().x;
-    auto y = circle.getPosition().y;
+    for (int i = 0; i < shapes.size(); i++) {
 
-    if (x <= 0 || x >= (float)wWidth) {
-      circleMoveSpeedX *= -1.0f;
-    }
+      auto x = shapes[i]->getPosition().x;
+      auto y = shapes[i]->getPosition().y;
 
-    if (y <= 0 || y >= (float)wHeight) {
-      circleMoveSpeedY *= -1.0f;
+      if (x <= 50.0f || x >= (float)wWidth - 50.0f) {
+        shapeMoveSpeedX[i] *= -1.0f;
+      }
+
+      if (y <= 50.0f || y >= (float)wHeight - 50.0f) {
+        shapeMoveSpeedY[i] *= -1.0f;
+      }
     }
     // Clear screen
     window.clear();
 
     // Draw the sprite
-    window.draw(circle /* sprite */);
+    for (int i = 0; i < shapes.size(); i++) {
+      window.draw(*shapes[i] /* sprite */);
+      shapes[i]->move(shapeMoveSpeedX[i], shapeMoveSpeedY[i]);
+    }
 
     // Draw the string
     window.draw(text);
 
     // Update the window
     window.display();
-    circle.move(circleMoveSpeedX, circleMoveSpeedY);
   }
 
   return EXIT_SUCCESS;
