@@ -1,16 +1,15 @@
-// a = f/m
-// dp = v * dt
-// dv = a * dt
 #include "../ecs/Vec2.cpp"
+#include <SFML/Graphics.hpp>
 #include <_types/_uint32_t.h>
 #include <cstddef>
 #include <iostream>
 #include <ostream>
 
-// todo mass
+// todo mass?
 typedef struct object {
   Vec2 pos, prev, acc;
   float radius;
+  sf::Color color;
 } Object;
 
 void updatePosition(Object &state, float dt) {
@@ -27,6 +26,7 @@ struct Solver {
   double t = 0.0;
   Vec2 gravity = {0.0f, 100.0f};
   std::vector<Object> objects;
+
   void update(float dt) {
     const uint32_t sub_steps = 8;
     const float sub_dt = dt / (float)(sub_steps);
@@ -37,6 +37,7 @@ struct Solver {
       updatePositions(sub_dt);
     }
   }
+
   void updatePositions(float dt) {
     for (auto &o : objects) {
       updatePosition(o, dt);
@@ -44,13 +45,16 @@ struct Solver {
     }
     t += dt;
   }
+
   void applyGravity() {
     for (auto &o : objects) {
       accelerate(o, gravity);
     }
   }
+
   void applyConstraint() {
 
+    // #define
     Vec2 pos = {300.0f, 300.0f};
     const float radius = 250.0f;
     for (auto &o : objects) {
@@ -59,11 +63,11 @@ struct Solver {
       std::cout << "dist: " << dist << std::endl;
       if (dist > radius - o.radius * 2) {
         Vec2 n = to_obj / dist;
-        std::cout << "n: " << n.x << ", " << n.y << std::endl;
         o.pos = pos + n * (radius - o.radius);
       }
     }
   }
+
   void solveCollisions() {
     ptrdiff_t count = objects.size();
     for (ptrdiff_t i = 0; i < count; i++) {
